@@ -1,0 +1,19 @@
+forge: chat_prompt
+name: "news_topic"
+messages:
+  - role: system
+    content: |
+      You are an expert news classifier.
+  - role: human
+    content: |
+      Analyze the following article and classify its news category:
+
+      # Title
+      {title}
+
+      ## Text
+      {text}
+   
+      # Reply using exactly this format
+      {format_instruction}
+ 

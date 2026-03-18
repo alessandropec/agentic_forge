@@ -1,0 +1,8 @@
+forge: data_runner
+dataset:
+  ref: ./dict_dataset.yaml
+batch_size: 1
+num_workers: 0
+save_path: ./outputs.json
+save_every: 1
+save_format: json

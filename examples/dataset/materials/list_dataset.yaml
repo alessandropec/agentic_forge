@@ -1,0 +1,4 @@
+forge: item_dataset
+path: ./list_dataset.json
+format: list
+key_field: id

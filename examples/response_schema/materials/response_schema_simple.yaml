@@ -1,0 +1,15 @@
+forge: response_schema
+name: simple_profile
+fields:
+  - name: username
+    type: str
+    description: User handle
+    required: true
+  - name: age
+    type: int
+    description: Age in years
+    required: false
+  - name: role
+    type: enum
+    description: User role
+    choices: ["admin", "editor", "viewer"]

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "row_01",
+    "name": "Alice",
+    "value": 10,
+    "category": "alpha"
+  },
+  {
+    "id": "row_02",
+    "name": "Bob",
+    "value": 22,
+    "category": "beta"
+  }
+]

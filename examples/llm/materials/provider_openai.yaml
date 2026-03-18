@@ -1,0 +1,13 @@
+forge: llm_provider
+
+type: openai
+api_key_file: ./api_keys.yaml
+
+models:
+  default_chat:
+    type: chat
+    name: gpt-4.1-mini
+
+  default_embedding:
+    type: embedding
+    name: text-embedding-3-large

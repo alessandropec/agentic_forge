@@ -1,0 +1,18 @@
+[
+  {
+    "key": "item_001",
+    "title": "Assisi homicide case",
+    "news_type": "crime",
+    "reasoning": [
+      "stubbed classification"
+    ]
+  },
+  {
+    "key": "item_002",
+    "title": "Italy wins the world championship",
+    "news_type": "sport",
+    "reasoning": [
+      "stubbed classification"
+    ]
+  }
+]

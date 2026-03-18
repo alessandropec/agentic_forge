@@ -1,0 +1,16 @@
+[
+  {
+    "id": "row_01",
+    "SRC_name": "Alice",
+    "SRC_value": 10,
+    "SRC_category": "alpha",
+    "INPUT_SUMMARY": "Alice - 10 (alpha)"
+  },
+  {
+    "id": "row_02",
+    "SRC_name": "Bob",
+    "SRC_value": 22,
+    "SRC_category": "beta",
+    "INPUT_SUMMARY": "Bob - 22 (beta)"
+  }
+]

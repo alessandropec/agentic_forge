@@ -1,0 +1,59 @@
+forge: toolset
+resources:
+  parliament_db:
+    factory: handlers.py:build_demo_db_connector
+    kwargs:
+      dataset: parliament
+tools:
+  search_documents:
+    ref: tools/search.yaml
+    defaults:
+      limit: 2
+  search_with_db:
+    description: Search documents using a shared connector built at forge time.
+    implementation: handlers.py:search_with_db
+    runtime:
+      resources:
+        db: parliament_db
+    arguments:
+      query:
+        type: string
+        description: Query to run against the shared database.
+      limit:
+        type: integer
+        description: Maximum number of results.
+        required: false
+        default: 5
+  remember_topic:
+    description: Store a topic inside the agent state.
+    implementation: handlers.py:remember_topic
+    runtime:
+      inject_state: true
+    arguments:
+      topic:
+        type: string
+        description: Topic to store in agent state.
+  answer_with_memory:
+    description: Answer by reading the current topic from agent state.
+    implementation: handlers.py:answer_with_memory
+    runtime:
+      inject_state: true
+    arguments:
+      question:
+        type: string
+        description: Question to answer using stored context.
+  summarize_text:
+    description: Summarize a text with a configurable style.
+    implementation: handlers.py:summarize_text
+    arguments:
+      text:
+        type: string
+        description: Text to summarize.
+      style:
+        type: string
+        description: Summary style.
+        required: false
+        default: brief
+        enum:
+          - brief
+          - full

@@ -1,0 +1,3 @@
+forge: item_dataset
+path: output_dict.json
+format: dict

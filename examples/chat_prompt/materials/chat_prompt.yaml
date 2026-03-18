@@ -1,0 +1,16 @@
+forge: chat_prompt
+name: "vision_prompt"
+messages:
+  - role: system
+    content: "You are a helpful assistant. Keep replies concise and focused."
+
+  - role: placeholder
+    content: history
+
+  - role: human
+    content: "{user_input}"
+    images:
+      - "{image_path_1}"
+      - "{image_path_2}"
+      - "../assets/sample_with_boxes.jpg"
+

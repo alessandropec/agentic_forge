@@ -1,0 +1,12 @@
+{
+  "item_001": {
+    "title": "Report One",
+    "text": "Short text for report one.",
+    "topic": "news"
+  },
+  "item_002": {
+    "title": "Report Two",
+    "text": "Short text for report two.",
+    "topic": "sport"
+  }
+}

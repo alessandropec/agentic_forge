@@ -1,0 +1,21 @@
+forge: llm_provider
+
+type: openai
+api_key_file: ./api_keys.yaml
+
+models:
+  vision_chat:
+    type: chat
+    name: gpt-4.1
+    max_tokens: 1200
+    temperature: 0.2
+
+  vision_chat_mini:
+    type: chat
+    name: gpt-4o-mini
+    max_tokens: 1200
+    temperature: 0.2
+
+  default_embedding:
+    type: embedding
+    name: text-embedding-3-large

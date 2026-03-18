@@ -1,0 +1,12 @@
+{
+  "item_001": {
+    "title": "Assisi homicide case",
+    "text": "A grim crime report from Italy today.",
+    "topic": "crime"
+  },
+  "item_002": {
+    "title": "Italy wins the world championship",
+    "text": "Italy beat Ukraine 18 to 0 in a dominant match.",
+    "topic": "sport"
+  }
+}

@@ -1,0 +1,5 @@
+forge: chat_message # This YAML is meant to fail validation on purpose.
+role: unsupported_role # Valid roles are: human, ai, placeholder, system.
+content: hello {variable} # Placeholder variables use braces, except placeholder-role variable names.
+images:
+  - "{img1}" # Human messages can use dynamic image refs, data URLs, or remote URLs.

@@ -1,0 +1,4 @@
+forge: example_uppercase
+prefix: "forged: "
+text: "hello agentic forge"
+uppercase: true

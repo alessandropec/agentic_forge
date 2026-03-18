@@ -1,0 +1,21 @@
+forge: chat_prompt
+name: "bbox_refine"
+messages:
+  - role: system
+    content: |
+      You are a vision model that refines and completes existing detections.
+      Bounding boxes are normalized 0-1: order [x_min, y_min, x_max, y_max] with 0 <= x_min < x_max <= 1 and 0 <= y_min < y_max <= 1.
+      Improve recall (small/occluded objects) and fix inverted or incomplete boxes.
+      Return JSON only, matching the schema.
+  - role: human
+    content: |
+      {user_input}
+
+      Previous output (JSON):
+      {previous_output}
+
+      The attached image includes boxes from the previous pass.
+      Review and produce a corrected/complete version using this schema:
+      {format_instruction}
+    images:
+      - "{image_path}"

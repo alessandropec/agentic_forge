@@ -1,0 +1,18 @@
+{
+  "item_001": {
+    "key": "item_001",
+    "RAW_title": "Report One",
+    "RAW_text": "Short text for report one.",
+    "RAW_topic": "news",
+    "INPUT_PROMPT": "Report One: Short text for report one.",
+    "INPUT_TOPIC": "news"
+  },
+  "item_002": {
+    "key": "item_002",
+    "RAW_title": "Report Two",
+    "RAW_text": "Short text for report two.",
+    "RAW_topic": "sport",
+    "INPUT_PROMPT": "Report Two: Short text for report two.",
+    "INPUT_TOPIC": "sport"
+  }
+}

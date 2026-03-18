@@ -1,0 +1,9 @@
+forge: llm_manager
+
+providers:
+  local_ollama:
+    ref: "./provider_ollama.yaml"
+  default_openai:
+    ref: "./provider_openai.yaml"
+  default_openrouter:
+    ref: "./provider_openrouter.yaml"

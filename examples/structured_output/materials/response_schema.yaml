@@ -1,0 +1,45 @@
+forge: response_schema
+name: scene_bounding_boxes
+fields:
+  - name: image_summary
+    type: str
+    description: Short summary of the detected scene.
+    required: false
+  - name: analysis_notes
+    type: str
+    description: Reasoning notes (ambiguities, hard objects, box decisions).
+    required: false
+  - name: objects
+    type: list
+    description: Detected objects with normalized bounding boxes (0-1).
+    items:
+      name: detection
+      type: obj
+      description: Single object detected in the image.
+      fields:
+        - name: label
+          type: str
+          description: Short name of the detected object.
+        - name: description
+          type: str
+          description: 1-2 sentences describing position or appearance.
+        - name: bounding_box
+          type: obj
+          description: Normalized coordinates (0-1) relative to width/height. Fixed order [x_min, y_min, x_max, y_max] with x_min < x_max and y_min < y_max.
+          fields:
+            - name: x_min
+              type: float
+              description: Normalized left X coordinate (0-1).
+            - name: y_min
+              type: float
+              description: Normalized top Y coordinate (0-1).
+            - name: x_max
+              type: float
+              description: Normalized right X coordinate (0-1).
+            - name: y_max
+              type: float
+              description: Normalized bottom Y coordinate (0-1).
+        - name: confidence
+          type: float
+          description: Estimated probability or confidence (0-1).
+          required: false

@@ -1,0 +1,14 @@
+forge: llm_provider
+
+type: ollama
+base_url: "http://localhost:11434"
+keep_alive: "2m"
+
+models:
+  default_chat:
+    type: chat
+    name: gemma3:12b
+
+  default_embedding:
+    type: embedding
+    name: mxbai-embed-large:latest

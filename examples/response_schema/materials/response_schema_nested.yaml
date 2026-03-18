@@ -1,0 +1,35 @@
+forge: response_schema
+name: catalog_item
+fields:
+  - name: id
+    type: str
+    description: Unique item identifier
+  - name: price
+    type: float
+    description: Price in USD
+  - name: metadata
+    type: obj
+    description: Additional data about the item
+    required: false
+    fields:
+      - name: tags
+        type: list
+        description: Tags for search and categorization
+        required: false
+        items:
+          name: tag
+          type: str
+          description: Single tag string
+      - name: dimensions
+        type: obj
+        description: Physical dimensions in cm
+        fields:
+          - name: width
+            type: float
+            description: Width in centimeters
+          - name: height
+            type: float
+            description: Height in centimeters
+          - name: depth
+            type: float
+            description: Depth in centimeters

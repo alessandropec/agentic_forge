@@ -1,0 +1,5 @@
+forge: chat_message
+role: human
+content: "Hi {user_input}, here is the image you asked about."
+images:
+  - "{image_path}"

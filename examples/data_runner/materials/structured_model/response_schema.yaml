@@ -1,0 +1,14 @@
+forge: response_schema
+name: news_classifier
+fields:
+  - name: reasoning
+    type: list
+    description: Bullet points with the atomic reasoning steps behind the classification.
+    items:
+      name: reasoning_step
+      type: str
+      description: One bullet point from the reasoning chain.
+  - name: news_type
+    type: enum
+    description: News category selected from the supported labels.
+    choices: [politics, sport, crime, economy, technology, health, entertainment, other]

@@ -1,0 +1,18 @@
+forge: structured_model
+
+llm_manager:
+  ref: ./manager_multi_provider.yaml
+
+model_selector: default_openrouter:vision_chat
+
+prompt_schema_pairs:
+  - name: detect
+    prompt:
+      ref: ./chat_prompt.yaml
+    schema:
+      ref: ./response_schema.yaml
+  - name: refine
+    prompt:
+      ref: ./refine_prompt.yaml
+    schema:
+      ref: ./response_schema.yaml

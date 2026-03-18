@@ -1,0 +1,15 @@
+forge: chat_prompt
+name: "vision_prompt_composed"
+messages:
+  # Reuse the human multimodal message defined in chat_message.yaml
+  - ref: "./chat_message.yaml"
+
+  # Placeholder to inject chat history when formatting
+  - role: placeholder
+    content: history
+
+  # Reuse the static system message; we also override its content here.
+  - ref: "./chat_message_static.yaml"
+    content: "Stay structured. Only answer what's asked."
+
+

@@ -1,0 +1,18 @@
+forge: chat_prompt
+name: "bbox_detector"
+messages:
+  - role: system
+    content: |
+      You are a vision assistant that returns structured JSON only.
+      Bounding boxes are normalized to width/height in the order [x_min, y_min, x_max, y_max] with 0 <= x_min < x_max <= 1 and 0 <= y_min < y_max <= 1.
+      Do not add any text outside the required schema.
+  - role: human
+    content: |
+      {user_input}
+
+      Analyze the provided image and return every visible object (partial objects included).
+      Populate a short reasoning note explaining any ambiguity.
+      Use only the following JSON schema:
+      {format_instruction}
+    images:
+      - "{image_path}"

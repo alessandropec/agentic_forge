@@ -1,0 +1,18 @@
+forge: llm_provider
+
+type: openrouter
+base_url: "https://openrouter.ai/api/v1"
+api_key_file: ./api_keys.yaml
+
+models:
+  default_chat:
+    type: chat
+    name: gpt-4.1-mini
+
+  default_embedding:
+    type: embedding
+    name: text-embedding-3-large
+
+  vision_chat:
+    type: chat
+    name: gpt-4.1-mini
