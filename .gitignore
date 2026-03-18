@@ -10,3 +10,4 @@ __pycache__/
 *.pycache
 .venv/
 venv/
+api_keys.yaml
