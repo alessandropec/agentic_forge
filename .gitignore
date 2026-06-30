@@ -11,3 +11,8 @@ __pycache__/
 .venv/
 venv/
 api_keys.yaml
+
+# Packaging build artifacts
+*.egg-info/
+build/
+dist/

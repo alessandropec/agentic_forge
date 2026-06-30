@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic_forge"
+version = "0.1.0"
+description = "Declarative Material -> Forge -> Forged framework for LLM agents, prompts, tools and datasets."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic==2.12.5",
+    "PyYAML==6.0.3",
+    "langchain-core==1.2.18",
+    "langchain-openai==1.1.10",
+    "langchain-ollama==1.0.1",
+    "langgraph==1.1.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["agentic_forge*"]
+exclude = ["examples*", "ai*", "coito*", "repo_asset*"]
