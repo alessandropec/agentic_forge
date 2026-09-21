@@ -31,3 +31,17 @@ providers:
 ## Related Material
 
 - [llm_provider_material_doc.md](./llm_provider_material_doc.md)
+
+## Inspect and select models
+
+```python
+from agentic_forge import forge
+
+manager = forge("manager.yaml")
+catalog = manager.list_models()
+info = manager.get_model_info("local_ollama:chat")
+print(info["supports_vision"])
+model = manager.get_model("local_ollama:chat", temperature=0.2)
+```
+
+Replace the selector with a provider/model alias from your YAML. Catalog inspection does not require the configured key files to exist. `get_model()` constructs the selected backend model and loads its credentials if configured.

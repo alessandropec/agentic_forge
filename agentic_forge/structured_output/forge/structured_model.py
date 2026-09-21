@@ -50,6 +50,7 @@ class StructuredModelForge(Forge):
             True
         """
         manager_dict = self._strip_forge_key(material.llm_manager)
+        manager_dict.setdefault("base_dir", material.base_dir)
         manager_material = LlmManagerMaterial(**manager_dict)
         manager = LlmManagerForge().forge_from_material(manager_material)
 
@@ -61,8 +62,10 @@ class StructuredModelForge(Forge):
         chains: dict[str, object] = {}
         format_instructions: dict[str, str] = {}
         for idx, pair in enumerate(material.prompt_schema_pairs):
-            prompt_dict = pair.prompt
-            schema_dict = pair.response_schema
+            prompt_dict = dict(pair.prompt)
+            schema_dict = dict(pair.response_schema)
+            prompt_dict.setdefault("base_dir", material.base_dir)
+            schema_dict.setdefault("base_dir", material.base_dir)
 
             prompt_material = ChatPromptMaterial(**prompt_dict)
             schema_material = ResponseSchemaMaterial(**schema_dict)

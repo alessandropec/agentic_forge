@@ -10,6 +10,8 @@ Each example folder documents one built-in Agentic Forge component and follows t
 
 Available guides:
 
+- [Correzioni del recupero e note di utilizzo](./recovery_fixes.md)
+
 - [Core](./core/README.md)
 - [Chat Prompt](./chat_prompt/README.md)
 - [Response Schema](./response_schema/README.md)

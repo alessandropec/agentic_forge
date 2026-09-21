@@ -61,7 +61,7 @@ class ForgedDataRunner(Forged):
         self.default_save_path = default_save_path
         self.default_save_every = default_save_every
         self.default_save_format = default_save_format
-        self.default_skip_keys: Set[str] = set(default_skip_keys or [])
+        self.default_skip_keys: Set[str] = {str(key) for key in default_skip_keys or []}
 
     def run(
         self,
@@ -104,14 +104,14 @@ class ForgedDataRunner(Forged):
             ...     skip_keys=["item_002"],
             ... )
         """
-        bs = batch_size or self.default_batch_size
+        bs = self.default_batch_size if batch_size is None else batch_size
         workers = self.default_num_workers if num_workers is None else num_workers
         cadence = self.default_save_every if save_every is None else save_every
         target_path = save_path or self.default_save_path
         output_format = save_format or self.default_save_format
         skip_set: Set[str] = set(self.default_skip_keys)
         if skip_keys:
-            skip_set.update(skip_keys)
+            skip_set.update(str(key) for key in skip_keys)
 
         self._validate_runtime_config(bs, workers, cadence, target_path, output_format)
 
@@ -121,6 +121,7 @@ class ForgedDataRunner(Forged):
         pending_chunk: List[Dict[str, Any]] = []
         processed = 0
         skipped = 0
+        visited = 0
         key_field = self.dataset.key_field or "id"
 
         progress = tqdm(
@@ -146,9 +147,14 @@ class ForgedDataRunner(Forged):
 
             for i in range(batch_len):
                 item = {k: v[i] for k, v in batch.items()}
-                key_value = item.get(key_field, self.dataset.get_key(progress.n))
+                key_value = item.get(key_field, self.dataset.get_key(visited))
+                # Torch's default collation turns numeric IDs into scalar tensors.
+                if hasattr(key_value, "item"):
+                    key_value = key_value.item()
+                item[key_field] = key_value
+                visited += 1
 
-                if key_value in skip_set:
+                if str(key_value) in skip_set:
                     skipped += 1
                     progress.update(1)
                     progress.set_postfix(saved=len(results), skipped=skipped)

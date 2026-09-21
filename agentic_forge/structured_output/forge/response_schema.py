@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Any, List, Tuple
+from typing import Annotated, Any, List, Tuple
 
-from pydantic import BaseModel, create_model
+from pydantic import BaseModel, Field, create_model
 
 from agentic_forge.core.codex import register_forge
 from agentic_forge.core.forge import Forge
@@ -50,7 +50,7 @@ class ResponseSchemaForge(Forge):
         annotations: dict[str, Tuple[type, Any]] = {}
         for field in fields:
             ann, default = self._field_to_annotation(field, parent_name=name)
-            annotations[field.name] = (ann, default)
+            annotations[field.name] = (ann, Field(default=default, description=field.description))
 
         return create_model(name, **annotations)  # type: ignore[arg-type]
 
@@ -98,7 +98,7 @@ class ResponseSchemaForge(Forge):
             from typing import List as TypingList
 
             item_ann, _ = self._field_to_annotation(field.items, parent_name=parent_name)
-            ann = TypingList[item_ann]  # type: ignore[index]
+            ann = TypingList[Annotated[item_ann, Field(description=field.items.description)]]
             if not required:
                 from typing import Optional as TypingOptional
 

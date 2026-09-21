@@ -6,11 +6,13 @@ Agentic Forge is a small declarative runtime for agentic AI components and workf
 
 ## Quick Start
 
+Returning to this project? Start with [START_HERE.md](START_HERE.md).
+
 Clone the repository, create a virtual environment, and install the dependencies:
 
 ```bash
-git clone <repo-url>
-cd agentic_forge2
+git clone https://github.com/alessandropec/agentic_forge.git
+cd agentic_forge
 python -m venv .venv
 ```
 
@@ -28,10 +30,10 @@ Install the runtime dependencies:
 
 ```bash
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install -e .
 ```
 
-Run everything from the repository root. The examples and notebooks already resolve the local package path automatically, so no editable install step is required.
+Run examples from the repository root. The editable install keeps imports aligned with this checkout.
 
 ## The Forge Abstraction
 

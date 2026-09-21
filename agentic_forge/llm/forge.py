@@ -32,7 +32,9 @@ class LlmManagerForge(Forge):
         provider_forge = LlmProviderForge()
 
         for key, provider_dict in material.providers.items():
-            pm = LlmProviderMaterial(**provider_dict)
+            provider_data = dict(provider_dict)
+            provider_data.setdefault("base_dir", material.base_dir)
+            pm = LlmProviderMaterial(**provider_data)
             providers[key] = provider_forge.forge_from_material(pm)
 
         return ForgedLlmManager(providers)

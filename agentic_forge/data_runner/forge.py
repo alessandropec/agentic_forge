@@ -26,6 +26,7 @@ class DataRunnerForge(Forge):
             ForgedDataRunner ready to process items.
         """
         dataset_dict = self._ensure_dataset_forge(dict(material.dataset))
+        dataset_dict.setdefault("base_dir", material.base_dir)
         dataset_material = ItemDatasetMaterial(**{k: v for k, v in dataset_dict.items() if k != "forge"})
         dataset = ItemDatasetForge().forge_from_material(dataset_material)
 

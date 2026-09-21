@@ -45,5 +45,5 @@ def get_forge(name: str) -> Type["Forge"]:
         KeyError: If no forge is registered with that name.
     """
     if name not in FORGES:
-        raise KeyError(f"Forge '{name}' non registrata. Forge disponibili: {list(FORGES.keys())}")
+        raise KeyError(f"Forge '{name}' is not registered. Available forges: {list(FORGES.keys())}")
     return FORGES[name]

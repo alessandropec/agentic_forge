@@ -58,9 +58,21 @@ class ForgedLlmManager(Forged):
                         "max_tokens": getattr(model, "max_tokens", None),
                         "temperature": getattr(model, "temperature", None),
                         "top_p": getattr(model, "top_p", None),
+                        "supports_vision": getattr(model, "supports_vision", False),
                     }
                 )
         return catalog
+
+    def get_model_info(self, selector: str) -> Dict[str, Any]:
+        """Return the catalog entry for one ``provider:model`` selector.
+
+        Raises:
+            KeyError: If no model matches the selector.
+        """
+        for entry in self.list_models():
+            if entry["selector"] == selector:
+                return entry
+        raise KeyError(f"Model selector '{selector}' not found")
 
     def _split_selector(self, selector: str) -> Tuple[str, str]:
         """Split ``provider:model`` selector into components."""

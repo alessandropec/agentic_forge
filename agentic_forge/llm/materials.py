@@ -1,7 +1,9 @@
 """Declarative materials for LLM providers, models, and managers."""
 
 from enum import Enum
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
+
+from pydantic import Field
 
 from agentic_forge.core.material import Material
 
@@ -39,6 +41,14 @@ class LlmModelMaterial(Material):
         max_tokens: Optional limit for chat responses.
         temperature: Optional sampling temperature.
         top_p: Optional nucleus sampling parameter.
+        supports_vision: Whether this model can take image inputs. Informational
+            metadata for callers (e.g. to decide whether to attach images to a
+            prompt); not enforced by the forge itself.
+        extra_options: Extra constructor kwargs forwarded to the underlying
+            LangChain chat or embedding model (e.g. ``{"num_gpu": 0}`` to force CPU on
+            Ollama, or ``{"reasoning": False}`` to disable a model's
+            "thinking" mode). Caller-supplied kwargs to ``get_model`` take
+            precedence over these on conflict.
     """
 
     type: ModelType
@@ -46,6 +56,8 @@ class LlmModelMaterial(Material):
     max_tokens: Optional[int] = None
     temperature: Optional[float] = None
     top_p: Optional[float] = None
+    supports_vision: bool = False
+    extra_options: Dict[str, Any] = Field(default_factory=dict)
 
 
 class LlmProviderMaterial(Material):

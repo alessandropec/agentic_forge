@@ -131,18 +131,26 @@ class ForgedChatPrompt(Forged):
         return getattr(self.prompt, "input_variables", [])
 
     def format_messages(self, *args: Any, **kwargs: Any) -> list[Any]:
-        # Keep original refs here to avoid massive notebook prints.
-        return self.prompt.format_messages(*args, **kwargs)
+        messages = self.prompt.format_messages(*args, **kwargs)
+        return _normalize_message_images(messages, self.base_dir, source_map=self._data_url_sources)
 
     def partial(self, **kwargs: Any) -> "ForgedChatPrompt":
         return ForgedChatPrompt(self.prompt.partial(**kwargs), base_dir=self.base_dir)
 
     def invoke(self, input: Any, config: Any = None, **kwargs: Any) -> Any:
-        # Direct invoke keeps original refs; conversion is injected in runnable pipelines.
-        return self.prompt.invoke(input=input, config=config, **kwargs)
+        value = self.prompt.invoke(input=input, config=config, **kwargs)
+        _normalize_prompt_value(value, self.base_dir, source_map=self._data_url_sources)
+        return value
+
+    async def ainvoke(self, input: Any, config: Any = None, **kwargs: Any) -> Any:
+        value = await self.prompt.ainvoke(input=input, config=config, **kwargs)
+        _normalize_prompt_value(value, self.base_dir, source_map=self._data_url_sources)
+        return value
 
     def compact_for_display(self, value: Any) -> Any:
         """Return a print-safe object with data URLs replaced by placeholders."""
+        for template in getattr(self.prompt, "messages", []):
+            self._data_url_sources.update(getattr(template, "image_sources", {}))
         return _compact_for_display(copy.deepcopy(value), self._data_url_sources)
 
     def __or__(self, other: Any) -> Any:

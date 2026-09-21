@@ -360,7 +360,11 @@ class ForgedItemDataset(Forged, Dataset):
             [{'id': 'a'}]
         """
         if format == "list":
-            return list(self._items)
+            field = key_field or self._key_field
+            return [
+                {**item, field: item.get(field, self.get_key(index))}
+                for index, item in enumerate(self._items)
+            ]
 
         if format == "dict":
             dataset: Dict[str, Any] = {}

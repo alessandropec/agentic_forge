@@ -43,3 +43,13 @@ Each model entry supports:
 | `max_tokens` | no | integer | Optional maximum token count for chat responses. |
 | `temperature` | no | number | Optional sampling temperature. |
 | `top_p` | no | number | Optional nucleus sampling parameter. |
+| `supports_vision` | no | boolean | Informational image-input capability, default `false`; exposed in the manager catalog, not enforced. |
+| `extra_options` | no | mapping | Additional chat or embedding constructor options, such as Ollama `num_gpu` or `reasoning`. |
+
+## Runtime behavior
+
+Chat and embedding options are merged in this order: declared model fields, `extra_options`, then keyword arguments to `get_model()`. For example, `get_model("chat", temperature=0.2)` overrides the YAML temperature. Use backend constructor names in `extra_options`; for Ollama, the declared `max_tokens` field maps to `num_predict`.
+
+API key files are read when a model is constructed, not when the provider or catalog is loaded. A missing key file therefore does not prevent inspecting the catalog or using another provider. Relative key paths resolve from the provider YAML, or from the enclosing manager YAML for inline providers.
+
+Credentials loaded from files stay local to each provider instance. Without a key file, the provider uses its existing `OPENAI_API_KEY` or `OPENROUTER_API_KEY` environment variable. Constructing providers never changes those variables or `OLLAMA_KEEP_ALIVE`; `keep_alive` is passed directly to Ollama models. Embeddings also honor `base_url`, `extra_options`, and explicit `get_model()` overrides.

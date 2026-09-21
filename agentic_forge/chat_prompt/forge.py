@@ -1,6 +1,9 @@
 """Forge implementations for chat prompts and messages."""
 
+from pathlib import Path
 from typing import Any, List, Union
+
+from pydantic import Field
 
 try:
     from langchain_core.prompts import (
@@ -16,12 +19,29 @@ except ImportError:  # pragma: no cover - allow docs generation without langchai
     HumanMessagePromptTemplate = MessagesPlaceholder = SystemMessagePromptTemplate = None  # type: ignore
 
 from agentic_forge.chat_prompt.material import ChatMessageMaterial, ChatPromptMaterial
-from agentic_forge.chat_prompt.forged import ForgedChatPrompt
+from agentic_forge.chat_prompt.forged import ForgedChatPrompt, _normalize_message_images
 from agentic_forge.core.codex import register_forge
 from agentic_forge.core.forge import Forge
 
 
 # TODO: add schema-level validation to ensure message coherence beyond field checks.
+
+if HumanMessagePromptTemplate is not None:
+    class _LocalImageMessageTemplate(HumanMessagePromptTemplate):
+        """Resolve images relative to the YAML that defines this message."""
+
+        image_base_dir: str | None = None
+        image_sources: dict[str, str] = Field(default_factory=dict)
+
+        def format(self, **kwargs: Any) -> Any:
+            message = super().format(**kwargs)
+            base = Path(self.image_base_dir) if self.image_base_dir else None
+            return _normalize_message_images([message], base, self.image_sources)[0]
+
+        async def aformat(self, **kwargs: Any) -> Any:
+            message = await super().aformat(**kwargs)
+            base = Path(self.image_base_dir) if self.image_base_dir else None
+            return _normalize_message_images([message], base, self.image_sources)[0]
 
 
 @register_forge("chat_message")
@@ -70,7 +90,9 @@ class ChatMessageForge(Forge):
             for img in material.images:
                 blocks.append({"type": "image_url", "image_url": {"url": img}})
 
-            return HumanMessagePromptTemplate.from_template(blocks)
+            return _LocalImageMessageTemplate.from_template(
+                blocks, image_base_dir=material.base_dir
+            )
 
         if material.role == "ai":
             return AIMessagePromptTemplate.from_template(material.content or "")
@@ -101,6 +123,11 @@ class ChatPromptForge(Forge):
         if ChatPromptTemplate is None:
             raise ImportError("langchain_core is required to build chat prompts")
         msg_forge = ChatMessageForge()
-        messages = [msg_forge.forge_from_material(m) for m in material.messages]
+        messages = [
+            msg_forge.forge_from_material(
+                m if m.base_dir else m.model_copy(update={"base_dir": material.base_dir})
+            )
+            for m in material.messages
+        ]
         prompt = ChatPromptTemplate.from_messages(messages)
         return ForgedChatPrompt(prompt, base_dir=material.base_dir)
